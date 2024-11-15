@@ -1,0 +1,6 @@
+@EatLess.Api_HostAddress = http://localhost:5259
+
+GET {{EatLess.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
