@@ -1,10 +1,5 @@
 ﻿using EatLess.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EatLess.Infrastructure
 {
@@ -16,11 +11,18 @@ namespace EatLess.Infrastructure
             
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
         }
 
         DbSet<Meal> meals { get; set; }
+        DbSet<MealComponent> mealComponents { get; set; }
+        DbSet<FoodItem> foodItems { get; set; }
     }
 }

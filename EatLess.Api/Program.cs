@@ -1,10 +1,19 @@
-using System.Reflection.Metadata;
+using EatLess.Infrastructure;
+using EatLess.Presentation;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var PresentationAssembly = typeof(AssemblyReference).Assembly;
 builder.Services.AddControllers().AddApplicationPart(PresentationAssembly);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                       ?? throw new InvalidOperationException("Connection string"
+                       + "'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

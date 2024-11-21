@@ -13,7 +13,6 @@ namespace EatLess.Domain.Primitives
         {
             Id = id;
         }
-
         protected Entity() { }
     }
 }
