@@ -1,4 +1,5 @@
 ﻿using EatLess.Domain.Entities;
+using EatLess.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace EatLess.Infrastructure
@@ -18,7 +19,17 @@ namespace EatLess.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder
+            .Entity<FoodItem>()
+            .Property(e => e.FoodTypeEnum)
+            .HasColumnType("nvarchar(24)");
+            modelBuilder
+            .Entity<FoodItem>()
+            .Property(e => e.FoodTypeEnum)
+            .HasConversion(
+                v => v.ToString(),
+                v => (FoodTypeEnum)Enum.Parse(typeof(FoodTypeEnum), v));
+
         }
 
         DbSet<Meal> meals { get; set; }

@@ -1,17 +1,22 @@
 ﻿using EatLess.Domain.Primitives;
+using EatLess.Domain.Shared;
 
 namespace EatLess.Domain.Entities
 {
-    public class FoodItem : Entity
+    public sealed class FoodItem : Entity
     {
         public string Name { get;private set; }
-        public string CaloriesPer100g { get;private set; }
+        public decimal CaloriesPerOneGram { get;private set; }
         public string Photo { get;private set; }
-        public enum Type
+        public FoodTypeEnum FoodTypeEnum { get; private set; }
+        internal FoodItem(Guid Id, string name, decimal caloriesPerOneGram, string photo)
+            :base(Id)
         {
-            Protein = 1,
-            Carb = 2,
-            Fat = 3
+            Name = name;
+            CaloriesPerOneGram = caloriesPerOneGram;
+            Photo = photo;
+            //FoodType = FoodTypeEnum.FromValue(type);
         }
     }
+
 }

@@ -15,10 +15,6 @@
     <None Remove="obj\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
   
 
 </Project>
