@@ -1,12 +1,15 @@
 using EatLess.Infrastructure;
 using EatLess.Presentation;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var PresentationAssembly = typeof(AssemblyReference).Assembly;
 builder.Services.AddControllers().AddApplicationPart(PresentationAssembly);
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(EatLess.Application.AssemblyReference.Assembly));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                        ?? throw new InvalidOperationException("Connection string"

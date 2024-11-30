@@ -1,5 +1,6 @@
-﻿using EatLess.Domain.Abstractions;
-using EatLess.Domain.Entities;
+﻿using EatLess.Domain.Entities;
+using EatLess.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,32 @@ using System.Threading.Tasks;
 
 namespace EatLess.Infrastructure.Repositories
 {
-    internal sealed class MealRepository : IMealRepository
+    public sealed class MealRepository : IMealRepository
     {
         private readonly ApplicationDbContext _context;
         public MealRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public void Insert(Meal meal)
+
+        public async Task<Meal> GetMealByIdAsync(Guid Id, CancellationToken cancellationToken = default)
         {
-            _context.Set<Meal>().Add(meal);
+            return await _context.Set<Meal>().Include(m => m.MealComponents).FirstOrDefaultAsync(m => m.Id == Id, cancellationToken);
+        }
+
+        public async Task<List<Meal>> GetListOfMealsAsync()
+        {
+            return await _context.Set<Meal>().Include(m => m.MealComponents).ToListAsync();
+        }
+
+        public void Remove(Meal meal)
+        {
+            _context.Set<Meal>().Remove(meal);
+        }
+
+        public void Add(Meal meal)
+        {
+            _context.Set<Meal>().AddAsync(meal);
         }
     }
 }

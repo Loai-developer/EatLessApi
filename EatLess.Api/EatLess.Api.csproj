@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EatLess.Application\EatLess.Application.csproj" />
     <ProjectReference Include="..\EatLess.Infrastructure\EatLess.Infrastructure.csproj" />
     <ProjectReference Include="..\EatLess.Presentation\EatLess.Presentation.csproj" />
   </ItemGroup>
