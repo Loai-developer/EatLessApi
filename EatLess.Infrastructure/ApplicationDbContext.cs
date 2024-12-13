@@ -20,15 +20,16 @@ namespace EatLess.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-            .Entity<FoodItem>()
-            .Property(e => e.FoodTypeEnum)
-            .HasColumnType("nvarchar(24)");
+            .Entity<Meal>()
+            .ComplexProperty(s => s.MealName, a =>
+            {
+                a.Property(p => p.Value).HasColumnName("Name");
+            });
+
             modelBuilder
             .Entity<FoodItem>()
             .Property(e => e.FoodTypeEnum)
-            .HasConversion(
-                v => v.ToString(),
-                v => (FoodTypeEnum)Enum.Parse(typeof(FoodTypeEnum), v));
+            .HasColumnName("FoodType");
 
         }
 

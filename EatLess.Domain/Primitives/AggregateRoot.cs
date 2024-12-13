@@ -10,7 +10,6 @@ namespace EatLess.Domain.Primitives
     {
         protected AggregateRoot(Guid Id) : base(Id)
         {
-            
         }
     }
 }

@@ -12,16 +12,19 @@ namespace EatLess.Domain.Entities
     {
         [ForeignKey("Meal")]
         public Guid MealId { get; private set; }
+        [ForeignKey("FoodItem")]
+        public Guid FoodItemId { get; private set; }
         public FoodItem FoodItem { get; private set; }
         public decimal Quantity { get;private set; }
         public Meal Meal { get; set; }
 
         //Internal constructor so it could be instantiated from inside the Meal class and wherever 
         //in the domain project
-        internal MealComponent(Guid Id, Guid mealId, decimal quantity) 
+        internal MealComponent(Guid Id, Guid mealId, Guid foodItemId, decimal quantity) 
             :base(Id)
         { 
             MealId = mealId;
+            FoodItemId = foodItemId;
             Quantity = quantity;
         }
     }

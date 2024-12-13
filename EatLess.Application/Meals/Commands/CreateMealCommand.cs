@@ -1,4 +1,5 @@
-﻿using EatLess.Domain.Abstractions.Messaging;
+﻿using EatLess.Application.ViewModels;
+using EatLess.Domain.Abstractions.Messaging;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace EatLess.Application.Meals.Commands
 {
-    public sealed record CreateMealCommand(string Name, DateTime MealTime) : ICommand;
+    public sealed record CreateMealCommand(MealVM vm) : ICommand;
 }
