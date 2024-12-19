@@ -1,13 +1,13 @@
 ﻿using EatLess.Application.ViewModels;
 using EatLess.Domain.Abstractions.Messaging;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EatLess.Application.Meals.Commands
+namespace EatLess.Application.Meals.Queries.GetMailById
 {
-    public sealed record CreateMealCommand(MealVM vm) : ICommand;
+    public sealed record GetMealByIdQuery(Guid Id) : IQuery<MealVM>;
+    
 }

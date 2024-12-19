@@ -5,6 +5,7 @@ using EatLess.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,9 +13,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EatLess.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214005239_addFoodItemsSeedDate")]
+    partial class addFoodItemsSeedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace EatLess.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b18ff371-060e-4af1-b72c-b2de8fe71e49"),
+                            Id = new Guid("2170c0d5-66c2-4e7f-9403-d988f13a3032"),
                             CaloriesPerOneGram = 140m,
                             FoodTypeEnum = "Carb",
                             Name = "Rice",
@@ -60,7 +63,7 @@ namespace EatLess.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("241ad3f0-7225-4944-97fd-74230fe060ad"),
+                            Id = new Guid("a8b70c16-5f47-4dce-b8fa-8ef2bb506a1b"),
                             CaloriesPerOneGram = 165m,
                             FoodTypeEnum = "Protein",
                             Name = "ChickenBreasts",
@@ -68,7 +71,7 @@ namespace EatLess.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d8659b10-198e-46f9-8275-86670bc00ae4"),
+                            Id = new Guid("0877f26a-00ca-499d-b125-0585b5bcca4b"),
                             CaloriesPerOneGram = 25m,
                             FoodTypeEnum = "Fiber",
                             Name = "Salad",
@@ -76,7 +79,7 @@ namespace EatLess.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7a434ad4-f0d1-4b88-a154-16d724237213"),
+                            Id = new Guid("191eae96-0ab1-4ea0-8c15-359a437c2d74"),
                             CaloriesPerOneGram = 180m,
                             FoodTypeEnum = "Protein",
                             Name = "ChickenSighs",

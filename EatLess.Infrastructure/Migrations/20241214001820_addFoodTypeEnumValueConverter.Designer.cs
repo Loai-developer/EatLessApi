@@ -5,6 +5,7 @@ using EatLess.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,9 +13,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EatLess.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214001820_addFoodTypeEnumValueConverter")]
+    partial class addFoodTypeEnumValueConverter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,40 +51,6 @@ namespace EatLess.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("foodItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b18ff371-060e-4af1-b72c-b2de8fe71e49"),
-                            CaloriesPerOneGram = 140m,
-                            FoodTypeEnum = "Carb",
-                            Name = "Rice",
-                            Photo = ""
-                        },
-                        new
-                        {
-                            Id = new Guid("241ad3f0-7225-4944-97fd-74230fe060ad"),
-                            CaloriesPerOneGram = 165m,
-                            FoodTypeEnum = "Protein",
-                            Name = "ChickenBreasts",
-                            Photo = ""
-                        },
-                        new
-                        {
-                            Id = new Guid("d8659b10-198e-46f9-8275-86670bc00ae4"),
-                            CaloriesPerOneGram = 25m,
-                            FoodTypeEnum = "Fiber",
-                            Name = "Salad",
-                            Photo = ""
-                        },
-                        new
-                        {
-                            Id = new Guid("7a434ad4-f0d1-4b88-a154-16d724237213"),
-                            CaloriesPerOneGram = 180m,
-                            FoodTypeEnum = "Protein",
-                            Name = "ChickenSighs",
-                            Photo = ""
-                        });
                 });
 
             modelBuilder.Entity("EatLess.Domain.Entities.Meal", b =>

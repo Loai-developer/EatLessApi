@@ -1,15 +1,15 @@
+using EatLess.Api.OptionsSetup;
 using EatLess.Application.Mappers;
 using EatLess.Domain.Repositories;
 using EatLess.Infrastructure;
 using EatLess.Infrastructure.Repositories;
-using EatLess.Presentation;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var PresentationAssembly = typeof(AssemblyReference).Assembly;
+var PresentationAssembly = typeof(EatLess.Presentation.AssemblyReference).Assembly;
 builder.Services.AddControllers().AddApplicationPart(PresentationAssembly);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(EatLess.Application.AssemblyReference.Assembly));
@@ -17,14 +17,26 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(EatLess.Appl
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString).ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
+
+builder
+    .Services.Scan(selector => selector.FromAssemblies(
+                EatLess.Infrastructure.AssemblyReference.Assembly,
+                EatLess.Presentation.AssemblyReference.Assembly)
+            .AddClasses(false)
+            //.UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMealRepository, MealRepository>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -36,11 +48,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

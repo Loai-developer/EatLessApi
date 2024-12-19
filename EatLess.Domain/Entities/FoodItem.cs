@@ -9,14 +9,17 @@ namespace EatLess.Domain.Entities
         public decimal CaloriesPerOneGram { get;private set; }
         public string Photo { get;private set; }
         public FoodTypeEnum FoodTypeEnum { get; private set; }
-        internal FoodItem(Guid Id, string name, decimal caloriesPerOneGram, string photo)
+        public FoodItem(Guid Id, string name, decimal caloriesPerOneGram, FoodTypeEnum FoodType, string photo )
             :base(Id)
         {
             Name = name;
             CaloriesPerOneGram = caloriesPerOneGram;
             Photo = photo;
+            FoodTypeEnum = FoodType;
             //FoodType = FoodTypeEnum.FromValue(type);
         }
+
+        protected FoodItem() { }   
     }
 
 }

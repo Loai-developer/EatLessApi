@@ -1,8 +1,6 @@
-﻿
+﻿using System.Reflection;
 
-using System.Reflection;
-
-namespace EatLess.Presentation
+namespace EatLess.Infrastructure
 {
     public class AssemblyReference
     {

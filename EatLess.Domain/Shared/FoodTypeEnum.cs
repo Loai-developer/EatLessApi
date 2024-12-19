@@ -11,13 +11,12 @@ namespace EatLess.Domain.Shared
             public static readonly FoodTypeEnum Protein = new ProteinFoodType();
             public static readonly FoodTypeEnum Carb = new CarbFoodType();
             public static readonly FoodTypeEnum Fat = new FatFoodType();
+            public static readonly FoodTypeEnum Fiber = new FiberFoodType();
 
             protected FoodTypeEnum(int value, string name)
                 : base(value, name)
             {
             }
-
-            //public abstract double Discount { get; }
 
             private sealed class ProteinFoodType : FoodTypeEnum
             {
@@ -26,7 +25,6 @@ namespace EatLess.Domain.Shared
                 {
                 }
 
-                //public override double Discount => 0.01;
             }
 
             private sealed class CarbFoodType : FoodTypeEnum
@@ -36,7 +34,6 @@ namespace EatLess.Domain.Shared
                 {
                 }
 
-                //public override double Discount => 0.05;
             }
 
             private sealed class FatFoodType : FoodTypeEnum
@@ -46,7 +43,15 @@ namespace EatLess.Domain.Shared
                 {
                 }
 
-                //public override double Discount => 0.1;
             }
-        }
+
+            private sealed class FiberFoodType : FoodTypeEnum
+            {
+                public FiberFoodType()
+                    : base(4, "Fiber")
+                {
+                }
+
+            }
+    }
 }

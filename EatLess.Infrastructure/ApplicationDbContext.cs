@@ -29,8 +29,17 @@ namespace EatLess.Infrastructure
             modelBuilder
             .Entity<FoodItem>()
             .Property(e => e.FoodTypeEnum)
+            .HasConversion(
+                v => v.ToString(),
+                v => (FoodTypeEnum)Enum.Parse(typeof(FoodTypeEnum), v))
             .HasColumnName("FoodType");
 
+            modelBuilder
+            .Entity<FoodItem>()
+            .HasData(new FoodItem(Guid.NewGuid(), "Rice", 140, FoodTypeEnum.Carb, "") ,
+                     new FoodItem(Guid.NewGuid(), "ChickenBreasts", 165, FoodTypeEnum.Protein, "") ,
+                     new FoodItem(Guid.NewGuid(), "Salad", 25, FoodTypeEnum.Fiber, "") ,
+                     new FoodItem(Guid.NewGuid(), "ChickenSighs", 180, FoodTypeEnum.Protein, "") );
         }
 
         DbSet<Meal> meals { get; set; }

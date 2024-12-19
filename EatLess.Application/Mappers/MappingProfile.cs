@@ -8,7 +8,15 @@ namespace EatLess.Application.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<MealComponentVM, MealComponent>().ReverseMap();
+            CreateMap<MealComponentVM, MealComponent>()
+                .ForMember(dest => dest.FoodItemId , opt => opt.MapFrom(src => src.FoodItemId))
+                .ForMember(dest => dest.Quantity , opt => opt.MapFrom(src => src.Quantity));
+
+            CreateMap<MealComponent , MealComponentVM>();
+
+            CreateMap<Meal, MealVM>()
+                .ForMember(dest => dest.MealName , source => source.MapFrom(src => src.MealName.Value))
+                .ReverseMap();
         }
     }
 }
