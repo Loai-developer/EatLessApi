@@ -1,10 +1,14 @@
 using EatLess.Api.OptionsSetup;
 using EatLess.Application.Mappers;
+using EatLess.Domain.Entities;
 using EatLess.Domain.Repositories;
 using EatLess.Infrastructure;
 using EatLess.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +37,31 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IMealRepository, MealRepository>();
 
-builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityCore<AppUser>(options =>
+{
+    //options.Password.RequireDigit = true;
+    //options.Password.RequiredLength = 8;
+    //options.Password.RequireNonAlphanumeric = false;
+    //options.Password.RequireUppercase = true;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>().AddApiEndpoints();
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "EatLess",
+        ValidAudience = "EatLess",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secret-key-value-which-has-to-be-so-long!"))
+    };
+});
+
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
@@ -48,6 +76,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

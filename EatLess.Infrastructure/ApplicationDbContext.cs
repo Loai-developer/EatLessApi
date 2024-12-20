@@ -1,24 +1,25 @@
 ﻿using EatLess.Domain.Entities;
 using EatLess.Domain.Shared;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EatLess.Infrastructure
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
-        public ApplicationDbContext(DbContextOptions options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Added when identity is added and fixed an error in adding identity migrations
+            base.OnModelCreating(modelBuilder);
             modelBuilder
             .Entity<Meal>()
             .ComplexProperty(s => s.MealName, a =>
