@@ -39,12 +39,12 @@ builder.Services.AddScoped<IMealRepository, MealRepository>();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityCore<AppUser>(options =>
+builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
 {
-    //options.Password.RequireDigit = true;
-    //options.Password.RequiredLength = 8;
-    //options.Password.RequireNonAlphanumeric = false;
-    //options.Password.RequireUppercase = true;
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>().AddApiEndpoints();
 
@@ -80,6 +80,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapGroup("/Account").MapIdentityApi<AppUser>();
 app.MapControllers();
 
 app.Run();

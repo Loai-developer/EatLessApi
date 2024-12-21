@@ -19,7 +19,7 @@ namespace EatLess.Presentation.Controllers
 
         [Route("Login")]
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody]LoginRequest request , CancellationToken cancellationToken)
+        public async Task<IActionResult> LoginUser([FromBody]LoginUserRequest request , CancellationToken cancellationToken)
         {
             var command = new LoginCommand(request.Email, request.Password);
             Result<string> result = await Sender.Send(command, cancellationToken);
